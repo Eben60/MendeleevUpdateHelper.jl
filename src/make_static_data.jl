@@ -36,6 +36,7 @@ function make_static_data(fl, rs, u_dic)
     return nothing
 end
 
+
 function make_oxstates_data(fl)
     open(fl, "w") do io
         oxstates = alloxstates()
