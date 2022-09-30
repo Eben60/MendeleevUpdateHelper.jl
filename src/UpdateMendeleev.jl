@@ -16,13 +16,14 @@ include("make_struct.jl")
 include("utype2str.jl")
 include("f_units.jl")
 include("data_import.jl")
+include("Isotopes.jl")
 if ! dev
     write_struct_jl(struct_fl, s_def_text)
     include(path_in_Mend("Element_M_def.jl")) # file just computer-generated - will be part of Mendeleev
-    include("Isotopes.jl")
 end
     include("make_static_data.jl")
 if ! dev
+    make_isotopes_data(isotopes_fl)
     make_static_data(static_data_fl, vs, f_unames)
     make_screening_data(screening_fl)
     make_ionization_data(ionization_fl)
