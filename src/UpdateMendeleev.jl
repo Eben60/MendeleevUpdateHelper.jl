@@ -1,5 +1,11 @@
-# __precompile__(false)
-
+"""
+The UpdateMendeleev module updates files in the (separate) Mendeleev.jl package.
+For this purpose, three function must be called in a sequence. Thus, usage is as following
+# Examples
+```julia-repl
+julia> using UpdateMendeleev; upd_mend1(); upd_mend2(); upd_mend3()
+```
+"""
 module UpdateMendeleev
 using SQLite, DataFrames, Tables, Unitful, PeriodicTable
 using JSONTables
