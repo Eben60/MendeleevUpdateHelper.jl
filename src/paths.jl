@@ -1,9 +1,9 @@
 # local files
-datadir = joinpath(@__DIR__ , "../../data/")
-elements_src = joinpath(datadir , "elements.db")
+datadir = normpath(@__DIR__ , "../data/")
+elements_src = normpath(datadir , "elements.db")
 tmp_dir = @get_scratch!("mendeleev_files")
-elements_dbfile = joinpath(tmp_dir, "mendeleev-elements.db")
-chembook_jsonfile = joinpath(datadir , "el_chembook.json")
+elements_dbfile = normpath(tmp_dir, "mendeleev-elements.db")
+chembook_jsonfile = normpath(datadir , "el_chembook.json")
 
 # Mendeleev.jl files
 function path_in_Mend(fl, path=nothing)
