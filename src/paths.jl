@@ -8,7 +8,8 @@ chembook_jsonfile = joinpath(datadir , "el_chembook.json")
 # Mendeleev.jl files
 function path_in_Mend(fl, path=nothing)
     if isnothing(path)
-        path = normpath(@__DIR__ , "../../src/")
+        # path = normpath(@__DIR__ , "../../src/")
+        path = normpath(raw"C:\_MyOwnDocs\SoftwareDevelopment\Mendeleev.jl\src")
     end
     return normpath(path, fl)
 end
