@@ -16,15 +16,16 @@ dev = false
 d = @__DIR__
 inclpath(fl) = normpath(d, fl)
 
-
+# TODO somehow set path before runnung the whole package
+path_m = normpath(d, "../../Mendeleev.jl/src")
 
 
 include("paths.jl")
-include(path_in_Mend("units.jl")) # part of Mendeleev
-include(path_in_Mend("seriesnames.jl")) # part of Mendeleev
-include(path_in_Mend("Group_M_def_data.jl")) # part of Mendeleev
-include(path_in_Mend("synonym_fields.jl")) # part of Mendeleev
-include(path_in_Mend("screeniningconsts_def.jl")) # part of Mendeleev
+# include(path_in_Mend("units.jl")) # part of Mendeleev
+include(path_in_Mend("seriesnames.jl", path_m)) # part of Mendeleev
+include(path_in_Mend("Group_M_def_data.jl", path_m)) # part of Mendeleev
+include(path_in_Mend("synonym_fields.jl", path_m)) # part of Mendeleev
+include(path_in_Mend("screeniningconsts_def.jl", path_m)) # part of Mendeleev
 include("PeriodicTable2df.jl")
 include("make_struct.jl")
 include("utype2str.jl")
@@ -41,7 +42,7 @@ end
 
 function upd_mend2(m_path=nothing; dev = false)
     if ! dev
-        include(path_in_Mend("Element_M_def.jl")) # file just computer-generated - will be part of Mendeleev
+        include(path_in_Mend("Element_M_def.jl", path_m)) # file just computer-generated - will be part of Mendeleev
         include(inclpath("make_static_data.jl"))
     end
     return nothing
