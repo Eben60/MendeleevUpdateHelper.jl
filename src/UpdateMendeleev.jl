@@ -34,34 +34,47 @@ include("els_data_import.jl")
 include("more_data_import.jl")
 include("Isotopes.jl")
 
-function upd_mend1(m_path=nothing; dev = false)
-    if ! dev
-        write_struct_jl(struct_fl, s_def_text)
-    end
-    return nothing
+include("make_static_data.jl")
+
+if ! dev
+    make_chem_elements(elements_init_data, els)
+    make_elements_data(static_data_fl, data_dict)
+    make_isotopes_data(isotopes_fl)
+    # make_static_data(static_data_fl, vs, f_unames)
+    make_screening_data(screening_fl)
+    make_ionization_data(ionization_fl)
+
+    # oxidation states are my own work now, no import from Mendeleev db
+    # make_oxstates_data(oxstate_fl)
 end
 
-function upd_mend2(m_path=nothing; dev = false)
-    if ! dev
-        include(path_in_Mend("Element_M_def.jl", path_m)) # file just computer-generated - will be part of Mendeleev
-        include(inclpath("make_static_data.jl"))
-    end
-    return nothing
-end
+# function upd_mend1(m_path=nothing; dev = false)
+#     if ! dev
+#         write_struct_jl(struct_fl, s_def_text)
+#     end
+#     return nothing
+# end
 
-function upd_mend3(m_path=nothing; dev = false)
-    if ! dev
-        make_isotopes_data(isotopes_fl)
-        make_static_data(static_data_fl, vs, f_unames)
-        make_screening_data(screening_fl)
-        make_ionization_data(ionization_fl)
+# function upd_mend2(m_path=nothing; dev = false)
+#     if ! dev
+#          include(inclpath("make_static_data.jl"))
+#     end
+#     return nothing
+# end
 
-        # oxidation states are my own work now, no import from Mendeleev db
-        # make_oxstates_data(oxstate_fl)
-    end
-    return nothing
-end
+# function upd_mend3(m_path=nothing; dev = false)
+#     if ! dev
+#         make_isotopes_data(isotopes_fl)
+#         make_static_data(static_data_fl, vs, f_unames)
+#         make_screening_data(screening_fl)
+#         make_ionization_data(ionization_fl)
 
-export upd_mend1, upd_mend2, upd_mend3
+#         # oxidation states are my own work now, no import from Mendeleev db
+#         # make_oxstates_data(oxstate_fl)
+#     end
+#     return nothing
+# end
+# 
+# export upd_mend1, upd_mend2, upd_mend3
 
 end  # module UpdateMendeleev
