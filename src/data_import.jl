@@ -1,9 +1,3 @@
-# elements_src = joinpath(@__DIR__ , "../data/elements.db")
-# tmp_dir = @get_scratch!("mendeleev_files")
-#
-# elements_dbfile = joinpath(tmp_dir, "mendeleev-elements.db")
-# chembook_jsonfile = joinpath(@__DIR__ , "../data/el_chembook.json")
-
 if !isfile(elements_dbfile)
     cp(elements_src, elements_dbfile)
 end
@@ -47,22 +41,22 @@ function inst_elements(xs)
     return e
 end
 
-function coltypes(cols, udict)
-    nms = Symbol.(names(cols))
-    tps = String[]
-    for (i, n) in pairs(nms)
-        if haskey(udict, n)
-            tp = "typeof(1.0*$(udict[n]))"
-            if eltype(cols[i]) isa Union
-                tp = "Union{Missing, $tp}"
-            end
-        else
-            tp = eltype(cols[i]) |> Symbol |> string
-        end
-        push!(tps, tp)
-    end
-    return tps
-end
+# function coltypes(cols, udict)
+#     nms = Symbol.(names(cols))
+#     tps = String[]
+#     for (i, n) in pairs(nms)
+#         if haskey(udict, n)
+#             tp = "typeof(1.0*$(udict[n]))"
+#             if eltype(cols[i]) isa Union
+#                 tp = "Union{Missing, $tp}"
+#             end
+#         else
+#             tp = eltype(cols[i]) |> Symbol |> string
+#         end
+#         push!(tps, tp)
+#     end
+#     return tps
+# end
 
 function sortcols!(df)
     nms = sort!(collect(names(df)))
@@ -155,7 +149,7 @@ end
 # df2unitful!(els, f_units)
 sortcols!(els)
 
-ctypes = coltypes(eachcol(els), fu1)
+# ctypes = coltypes(eachcol(els), fu1) # de-unitfulling
 
 cnames = names(els) # 70-element Vector{String}: "annotation"...
 vs = NamedTuple.(eachrow(els))
@@ -182,4 +176,4 @@ end
 # allionizenergies() = Dict(n => ionizenergies(n) for n in 1:LAST_NO)
 
 # (;type=nmtp, fields=x)
-s_def_text = make_struct("Element_M", cnames, ctypes)
+# s_def_text = make_struct("Element_M", cnames, ctypes)  # de-unitfulling 

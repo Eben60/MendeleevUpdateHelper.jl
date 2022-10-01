@@ -28,8 +28,8 @@ include(path_in_Mend("synonym_fields.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("screeniningconsts_def.jl", path_m)) # part of Mendeleev
 include("PeriodicTable2df.jl")
 include("make_struct.jl")
-include("utype2str.jl")
-include("f_units.jl")
+# include("utype2str.jl")
+# include("f_units.jl")
 include("data_import.jl")
 include("Isotopes.jl")
 

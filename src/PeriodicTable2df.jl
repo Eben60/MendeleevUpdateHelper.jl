@@ -1,4 +1,6 @@
-# using PeriodicTable, DataFrames
+# using PeriodicTable
+
+# read all data to be taken over from PeriodicTable package into a DataFrame
 
 fnms = fieldnames(eltype(elements))
 nt(e) = NamedTuple([f => getfield(e, f) for f in fnms])
