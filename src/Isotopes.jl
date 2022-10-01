@@ -12,7 +12,7 @@ function elem_isotopes(no, df)
     return el_data
 end
 
-d_isot = Dict(n => elem_isotopes(n, i4s) for n in 1:LAST_NO)
+d_isot = Dict(n => elem_isotopes(n, i4s) for n in 1:last_no)
 
 function isot_string(x)
     s = string.(x)
@@ -32,7 +32,7 @@ function make_isotopes_data(fl)
         println(io, "# this is computer generated file - better not edit")
         println(io)
         println(io, "const isotopes_data = Dict{Int64, Union{Missing, Isotopes}}(")
-        for no in 1:LAST_NO
+        for no in 1:last_no
             println(io, "    $no => ", isots_string(d_isot[no]), ",")
         end
         println(io, ")")

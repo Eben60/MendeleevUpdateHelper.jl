@@ -92,7 +92,7 @@ function make_ionization_data(fl)
         println(io, "# this is computer generated file - better not edit")
         println(io)
         println(io, "const ionization_data = Dict{Int64, Union{Missing, Vector{Union{Missing, Float64}}}}(")
-        for atomic_number in 1:LAST_NO
+        for atomic_number in 1:last_no
             print_ioniz_energies(io, atomic_number)
         end
         println(io, ")")

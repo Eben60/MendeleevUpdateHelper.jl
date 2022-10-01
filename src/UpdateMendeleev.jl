@@ -7,7 +7,7 @@ julia> using UpdateMendeleev; upd_mend1(); upd_mend2(); upd_mend3()
 ```
 """
 module UpdateMendeleev
-using SQLite, DataFrames, Tables, Unitful, PeriodicTable
+using SQLite, DataFrames, Tables, PeriodicTable # Unitful, 
 using JSONTables
 using Scratch
 
@@ -30,7 +30,8 @@ include("PeriodicTable2df.jl")
 include("make_struct.jl")
 # include("utype2str.jl")
 # include("f_units.jl")
-include("data_import.jl")
+include("els_data_import.jl")
+include("more_data_import.jl")
 include("Isotopes.jl")
 
 function upd_mend1(m_path=nothing; dev = false)

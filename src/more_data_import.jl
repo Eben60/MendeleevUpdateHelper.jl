@@ -1,77 +1,77 @@
-if !isfile(elements_dbfile)
-    cp(elements_src, elements_dbfile)
-end
-
-function readdf(jfile)
-    jsource = open(jfile) do file
-       read(file, String)
-    end
-    return DataFrame(jsontable(jsource))
-end
-
-
-function read_db_tables(dbfile)
-    edb = SQLite.DB(dbfile)
-    tbls = SQLite.tables(edb)
-    tblnames = [t.name for t in tbls]
-    dfs = (; [Symbol(tname) => (DBInterface.execute(edb, "SELECT * FROM $tname") |> DataFrame) for tname in tblnames]...)
-    return dfs
-end
-
-const dfs = read_db_tables(elements_dbfile)
-dfcb = readdf(chembook_jsonfile)
-
-els = dfs.elements
-els = rightjoin(dfcb, els, on = :atomic_number)
-els = rightjoin(dfpt, els, on = :atomic_number)
-
-sort!(els, :atomic_number)
-
-const LAST_NO = maximum(els[!, :atomic_number])
-
-# programmatically define struct named Element_M with given field names and types
-
-# const ELEMENTS_M = [Element_M(v...) for v in vs] # takes as long as 90s on my computer
-
-function inst_elements(xs)
-    e = Element_M[]
-    for x in xs
-        push!(e, Element_M(x...))
-    end
-    return e
-end
-
-# function coltypes(cols, udict)
-#     nms = Symbol.(names(cols))
-#     tps = String[]
-#     for (i, n) in pairs(nms)
-#         if haskey(udict, n)
-#             tp = "typeof(1.0*$(udict[n]))"
-#             if eltype(cols[i]) isa Union
-#                 tp = "Union{Missing, $tp}"
-#             end
-#         else
-#             tp = eltype(cols[i]) |> Symbol |> string
-#         end
-#         push!(tps, tp)
-#     end
-#     return tps
+# if !isfile(elements_dbfile)
+#     cp(elements_src, elements_dbfile)
 # end
 
-function sortcols!(df)
-    nms = sort!(collect(names(df)))
-    select!(df, nms...)
-    return nothing
-end
-
-# boolean columns are sometimes encoded as integer {0, 1} and sometimes as {missing, 1} - let's convert them to Bool
-select!(els, [:is_monoisotopic, :is_radioactive] .=> ByRow(x -> !(ismissing(x) || x == 0)), renamecols=false, :)
-# @show els[1:3, :is_monoisotopic]
-# @show els[81:84, :is_radioactive]
+# function readdf(jfile)
+#     jsource = open(jfile) do file
+#        read(file, String)
+#     end
+#     return DataFrame(jsontable(jsource))
+# end
 
 
-select!(els, :symbol => ByRow(x -> Symbol.(x)), renamecols=false, :)
-# @show els[1:3, :symbol]
+# function read_db_tables(dbfile)
+#     edb = SQLite.DB(dbfile)
+#     tbls = SQLite.tables(edb)
+#     tblnames = [t.name for t in tbls]
+#     dfs = (; [Symbol(tname) => (DBInterface.execute(edb, "SELECT * FROM $tname") |> DataFrame) for tname in tblnames]...)
+#     return dfs
+# end
+
+# const dfs = read_db_tables(elements_dbfile)
+# dfcb = readdf(chembook_jsonfile)
+
+# els = dfs.elements
+# els = rightjoin(dfcb, els, on = :atomic_number)
+# els = rightjoin(dfpt, els, on = :atomic_number)
+
+# sort!(els, :atomic_number)
+
+# const last_no = maximum(els[!, :atomic_number])
+
+# # programmatically define struct named Element_M with given field names and types
+
+# # const ELEMENTS_M = [Element_M(v...) for v in vs] # takes as long as 90s on my computer
+
+# # function inst_elements(xs)
+# #     e = Element_M[]
+# #     for x in xs
+# #         push!(e, Element_M(x...))
+# #     end
+# #     return e
+# # end
+
+# # function coltypes(cols, udict)
+# #     nms = Symbol.(names(cols))
+# #     tps = String[]
+# #     for (i, n) in pairs(nms)
+# #         if haskey(udict, n)
+# #             tp = "typeof(1.0*$(udict[n]))"
+# #             if eltype(cols[i]) isa Union
+# #                 tp = "Union{Missing, $tp}"
+# #             end
+# #         else
+# #             tp = eltype(cols[i]) |> Symbol |> string
+# #         end
+# #         push!(tps, tp)
+# #     end
+# #     return tps
+# # end
+
+# function sortcols!(df)
+#     nms = sort!(collect(names(df)))
+#     select!(df, nms...)
+#     return nothing
+# end
+
+# # boolean columns are sometimes encoded as integer {0, 1} and sometimes as {missing, 1} - let's convert them to Bool
+# select!(els, [:is_monoisotopic, :is_radioactive] .=> ByRow(x -> !(ismissing(x) || x == 0)), renamecols=false, :)
+# # @show els[1:3, :is_monoisotopic]
+# # @show els[81:84, :is_radioactive]
+
+
+# select!(els, :symbol => ByRow(x -> Symbol.(x)), renamecols=false, :)
+# # @show els[1:3, :symbol]
 
 
 ser = dfs.series
@@ -173,7 +173,7 @@ function ionizenergies(atomic_number)
     return v
 end
 
-# allionizenergies() = Dict(n => ionizenergies(n) for n in 1:LAST_NO)
+# allionizenergies() = Dict(n => ionizenergies(n) for n in 1:last_no)
 
 # (;type=nmtp, fields=x)
 # s_def_text = make_struct("Element_M", cnames, ctypes)  # de-unitfulling 
