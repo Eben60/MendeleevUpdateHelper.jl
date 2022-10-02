@@ -1,6 +1,6 @@
 """
 The UpdateMendeleev module updates files in the (separate) Mendeleev.jl package.
-For this purpose, three function must be called in a sequence. Thus, usage is as following
+For this purpose, some function must be called in a sequence. Thus, usage is as following
 # Examples
 ```julia-repl
 julia> using UpdateMendeleev; upd_mend1(); upd_mend2(); upd_mend3()
@@ -21,15 +21,12 @@ path_m = normpath(d, "../../Mendeleev.jl/src")
 
 
 include("paths.jl")
-# include(path_in_Mend("units.jl")) # part of Mendeleev
 include(path_in_Mend("seriesnames.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("Group_M_def_data.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("synonym_fields.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("screeniningconsts_def.jl", path_m)) # part of Mendeleev
 include("PeriodicTable2df.jl")
 include("make_struct.jl")
-# include("utype2str.jl")
-# include("f_units.jl")
 include("els_data_import.jl")
 include("more_data_import.jl")
 include("Isotopes.jl")

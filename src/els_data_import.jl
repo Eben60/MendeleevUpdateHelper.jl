@@ -86,9 +86,9 @@ function make_elements_data(fl, data)
     open(fl, "w") do io
         println(io, "# this is computer generated file - better not edit")
         println(io)
-        println(io, "const elements_data = Dict{Symbol, Vector{Any}}(")
+        println(io, "const elements_data = Dict{Symbol, Vector}(")
         for nm in nms
-            println(io, "    $nm => ")
+            println(io, "    :$nm => ")
             printvector(io, data[nm])
             println(io, "    ,")
         end
@@ -103,11 +103,11 @@ function make_chem_elements(fl, df)
     open(fl, "w") do io
         println(io, "# this is computer generated file - better not edit")
         println(io)
-        println(io, "const ELEMENTS_M = Elements_M([")
+        println(io, "const chem_elements = ChemElems([")
         for n in nums
             symb = df[n, :symbol]
             nm = df[n, :name]
-            !ismissing(symb) && println(io, "    Element_M($n, \"$nm\", :$symb),")
+            !ismissing(symb) && println(io, "    ChemElem($n, \"$nm\", :$symb),")
         end
         println(io, "])")
     end
