@@ -1,5 +1,12 @@
 if !isfile(elements_dbfile)
     cp(elements_src, elements_dbfile)
+else
+    src_info = stat(elements_src)
+    cd_info = stat(elements_dbfile)
+    if (src_info.size != cd_info.size)
+        cp(elements_src, elements_dbfile; force=true)
+        println("updated database cached file")
+    end
 end
 
 function readdf(jfile)
