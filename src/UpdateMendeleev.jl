@@ -74,4 +74,4 @@ end
 # 
 # export upd_mend1, upd_mend2, upd_mend3
 
-end  # module UpdateMendeleev
+end  # module MendeleevUpdateHelper
