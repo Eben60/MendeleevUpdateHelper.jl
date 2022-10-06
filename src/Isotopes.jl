@@ -3,7 +3,7 @@ sym(x) = string(el(x).symbol)
 
 isot = dfs.isotopes
 i4 = select(isot, :id, :atomic_number, :atomic_number => (x -> sym.(x))  => :sym, :mass_number, :mass, :abundance; renamecols=false)
-i4s = subset(i4, :abundance => (x -> .!ismissing.(x) ))[!, [:atomic_number, :mass_number, :mass, :abundance]]
+i4s = subset(i4, :abundance => (x -> .!(ismissing.(x) .| iszero.(x))))[!, [:atomic_number, :mass_number, :mass, :abundance]]
 
 function elem_isotopes(no, df)
     nos = Set(df[!, :atomic_number])
