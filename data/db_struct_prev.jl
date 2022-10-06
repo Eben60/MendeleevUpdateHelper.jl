@@ -1,4 +1,4 @@
-# this is old computer generated file - better not edit
+# this is computer generated file - better not edit
 
 df_layout = Dict{Symbol, Vector{String}}(
     :groups => [
@@ -101,19 +101,26 @@ df_layout = Dict{Symbol, Vector{String}}(
     ],
     :isotopes => [
     "abundance",
+    "abundance_uncertainty",
     "atomic_number",
+    "discovery_year",
     "g_factor",
+    "g_factor_uncertainty",
     "half_life",
+    "half_life_uncertainty",
     "half_life_unit",
     "is_radioactive",
     "mass",
     "mass_number",
     "mass_uncertainty",
+    "parity",
     "quadrupole_moment",
+    "quadrupole_moment_uncertainty",
     "spin",
     ],
     :oxidationstates => [
     "atomic_number",
+    "category",
     "oxidation_state",
     ],
     :screeningconstants => [

@@ -23,6 +23,10 @@ path_m = normpath(d, "../../Mendeleev.jl/src")
 
 
 include("paths.jl")
+if dev
+    using Mendeleev
+    include("check_docs.jl")
+end
 include(db_struct_prev_fl)
 include(path_in_Mend("seriesnames.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("Group_M_def_data.jl", path_m)) # part of Mendeleev
@@ -47,6 +51,8 @@ if ! dev
     # oxidation states are my own work now, no import from Mendeleev db
     # make_oxstates_data(oxstate_fl)
 end
+
+export checkdocs
 
 # function upd_mend1(m_path=nothing; dev = false)
 #     if ! dev
