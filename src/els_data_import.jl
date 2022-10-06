@@ -19,6 +19,56 @@ function read_db_tables(dbfile)
 end
 
 const dfs = read_db_tables(elements_dbfile)
+
+sortednames(nt::NamedTuple, to_omit) = sort(setdiff(keys(nt), to_omit))
+sortednames(df::DataFrame) = sort(setdiff(names(df), ["id"]))
+
+tablenames = sortednames(dfs, [:alembic_version,])
+tabledict = Dict{Symbol, Vector{String}}()
+
+for tn in tablenames 
+    df = dfs[tn]
+    # println(tn)
+    dfnames = sortednames(df)
+    # println(dfnames)
+    push!(tabledict, tn=>dfnames)
+end
+
+
+function write_dflayout(fl)
+ 
+    open(fl, "w") do io
+        println(io, "# this is computer generated file - better not edit")
+        println(io)
+        println(io, "df_layout = Dict{Symbol, Vector{String}}(")
+        for (k, nms) in pairs(tabledict)
+            println(io, "    :$k => [")
+            # nms = sortednames(dfs[k])
+            for v in nms
+                println(io, "    \"$v\",")
+            end
+            println(io, "    ],")
+            # symb = df[n, :symbol]
+            # nm = df[n, :name]
+            # !ismissing(symb) && println(io, "    ChemElem($n, \"$nm\", :$symb),")
+        end
+        println(io, ")")
+    end
+    return nothing 
+end
+
+try
+    @assert df_layout == tabledict
+catch
+    if update_db
+         write_dflayout(db_struct_new_fl)
+         println("wrote the current db layout into file \"db_struct_new.jl\"")
+    end
+    throw(ErrorException("database layout changed! - please re-check"))
+end
+
+# # # # # # # # # # 
+
 dfcb = readdf(chembook_jsonfile)
 
 els = dfs.elements

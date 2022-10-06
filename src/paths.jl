@@ -20,3 +20,6 @@ oxstate_fl = path_in_Mend("oxistates_data.jl", path_m)
 screening_fl = path_in_Mend("screening_data.jl", path_m)
 ionization_fl = path_in_Mend("ionization_data.jl", path_m)
 isotopes_fl = path_in_Mend("isotopes_data.jl", path_m)
+
+db_struct_prev_fl = normpath(datadir , "db_struct_prev.jl")
+db_struct_new_fl = normpath(datadir , "db_struct_new.jl")

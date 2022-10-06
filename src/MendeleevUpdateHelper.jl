@@ -11,7 +11,9 @@ using SQLite, DataFrames, Tables, PeriodicTable # Unitful,
 using JSONTables
 using Scratch
 
-dev = false
+dev = true
+update_db = true
+dev = dev || update_db # only write to Mendeleev.jl after you controlled the changes of the database
 
 d = @__DIR__
 inclpath(fl) = normpath(d, fl)
@@ -21,6 +23,7 @@ path_m = normpath(d, "../../Mendeleev.jl/src")
 
 
 include("paths.jl")
+include(db_struct_prev_fl)
 include(path_in_Mend("seriesnames.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("Group_M_def_data.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("synonym_fields.jl", path_m)) # part of Mendeleev

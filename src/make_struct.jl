@@ -31,13 +31,4 @@ function make_struct(sname, fnames, ftypes, create=false)
 end
 
 function write_struct_jl(fl, descr)
-    open(fl, "w") do io
-        println(io, "# this is computer generated file - better not edit")
-        println(io)
-        println(io, "struct $(descr.s_type)")
-        for f in descr.xs
-            println(io, "    $f")
-        end
-        println(io, "end")
-    end
-end
+  end
