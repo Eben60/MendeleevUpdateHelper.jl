@@ -5,6 +5,8 @@ tmp_dir = @get_scratch!("mendeleev_files")
 elements_dbfile = normpath(tmp_dir, "mendeleev-elements.db")
 chembook_jsonfile = normpath(datadir , "el_chembook.json")
 
+python_db_file = "~/Library/Python/3.9/lib/python/site-packages/mendeleev/elements.db"
+
 # Mendeleev.jl files
 function path_in_Mend(fl, path=nothing)
     if isnothing(path)
