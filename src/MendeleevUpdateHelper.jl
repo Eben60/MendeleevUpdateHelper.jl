@@ -3,7 +3,7 @@ The MendeleevUpdateHelper module updates files in the (separate) Mendeleev.jl pa
 For this purpose, some function must be called in a sequence. Thus, usage is as following
 # Examples
 ```julia-repl
-julia> using UpdateMendeleev; upd_mend1(); upd_mend2(); upd_mend3()
+julia> using UpdateMendeleev; # upd_mend1(); upd_mend2(); upd_mend3()
 ```
 """
 module MendeleevUpdateHelper
@@ -11,8 +11,8 @@ using SQLite, DataFrames, Tables, PeriodicTable # Unitful,
 using JSONTables
 using Scratch
 
-dev = true
-update_db = true
+dev = true # set to false to actually write data to Mendeleev.jl
+update_db = false
 dev = dev || update_db # only write to Mendeleev.jl after you controlled the changes of the database
 
 d = @__DIR__
@@ -39,15 +39,16 @@ include("more_data_import.jl")
 include("Isotopes.jl")
 
 include("make_static_data.jl")
+include("ionicradii.jl")
 
 if ! dev
     make_chem_elements(elements_init_data, els)
     make_elements_data(static_data_fl, data_dict)
-    make_isotopes_data(isotopes_fl)
+    # make_isotopes_data(isotopes_fl) # temporary, or at least until py-mendeleev checked and found OK
     # make_static_data(static_data_fl, vs, f_unames)
     make_screening_data(screening_fl)
     make_ionization_data(ionization_fl)
-
+    make_irad_data(ionicradii_fl)
     # oxidation states are my own work now, no import from Mendeleev db
     # make_oxstates_data(oxstate_fl)
 end

@@ -26,6 +26,8 @@ ionization_fl = path_in_Mend("ionization_data.jl", path_m)
 isotopes_fl = path_in_Mend("isotopes_data.jl", path_m)
 fields_doc_fl = path_in_Mend("elements_data_fields.md", path_docs)
 
+ionicradii_fl = path_in_Mend("ionrad_data.jl", path_m) 
+
 db_struct_prev_fl = normpath(datadir , "db_struct_prev.jl")
 db_struct_new_fl = normpath(datadir , "db_struct_new.jl")
 
