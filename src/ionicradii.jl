@@ -51,7 +51,7 @@ end
 
 function writecolumn(io, df, colname)
     col = df[!, colname]
-    println(io, "    $colname = (")
+    println(io, "    $colname = [")
     for (n, c) in pairs(col)
         an = df[n, :atomic_number]
         sym = elements[an].symbol
@@ -66,7 +66,7 @@ function writecolumn(io, df, colname)
         end
         println(io, "    $s, $cmnt" )
     end
-    println(io, "    ),")
+    println(io, "    ],")
 end
 
 function writecolumns(io, df)

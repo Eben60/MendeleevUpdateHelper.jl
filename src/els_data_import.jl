@@ -129,12 +129,20 @@ function to_str(x)
     return string(x)
 end
 
-function printtuple(io, v)
-    println(io, "    (")
+# function printtuple(io, v)
+#     println(io, "    (")
+#     for (n, x) in pairs(v)
+#          println(io, "    $(to_str(x)) , # $(el_symbols[n])")
+#     end
+#     println(io, "    )")
+# end
+
+function printvector(io, v)
+    println(io, "    [")
     for (n, x) in pairs(v)
          println(io, "    $(to_str(x)) , # $(el_symbols[n])")
     end
-    println(io, "    )")
+    println(io, "    ]")
 end
 
 function make_elements_data(fl, data)
@@ -145,7 +153,7 @@ function make_elements_data(fl, data)
         println(io, "const elements_data = (; ")
         for nm in nms
             println(io, "    $nm = ")
-            printtuple(io, data[nm])
+            printvector(io, data[nm])
             println(io, "    ,")
         end
         println(io, ")")
