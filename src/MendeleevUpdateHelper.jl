@@ -11,7 +11,7 @@ using SQLite, DataFrames, Tables, PeriodicTable # Unitful,
 using JSONTables
 using Scratch
 
-dev = false # set to false to actually write data to Mendeleev.jl
+dev = true # set to false to actually write data to Mendeleev.jl
 update_db = false
 dev = dev || update_db # only write to Mendeleev.jl after you controlled the changes of the database
 
