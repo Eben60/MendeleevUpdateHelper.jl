@@ -77,12 +77,51 @@ function dd2dnt(d)
     return d1
 end
 
-fl = normpath(@__DIR__, "../data/lixue_all.txt")
-if !(@isdefined lx_in)
-    lx_in = read(fl, String)
+sormiss(x) = ismissing(x) ? "missing" : ":$x"
+
+nt2str(nt) = "(:$(nt.coord), $(sormiss(nt.spin)), $(nt.value))"
+
+function vnt2str(vnt)
+    vs = nt2str.(vnt)
+    s = join(vs, ", ")
+    return "[$s]"
 end
-lxs = alllixue(lx_in)
-d = ntlx(lxs)
-v = elvec(d)
-v1 = [dd2dnt(x) for x in v]
+
+function dnt2str(d)
+    ismissing(d) && return "missing"
+    nts = [(;key, val) for (key, val) in d]
+    sort!(nts)
+    s = ["$(nt.key) => $(vnt2str(nt.val))" for nt in nts]
+    return "Dict($(join(s, ", ")))"
+end
+
+function writelx2jul(v, fl)
+    open(fl, "w") do io
+        println(io, "# this is computer generated file - better not edit")
+        println(io)
+        println(io, "const lixue_data = [")
+        for x in v
+            println(io, "    $x")
+        end
+        println(io, "]")
+    end
+    return nothing
+end
+
+function lixuepy2jul(fin="lixue_all.txt", fout="lixue_all.jl"; w=false)
+    fin = normpath(@__DIR__, "../data/", fin)
+    fout = normpath(@__DIR__, "../data/", fout)
+    if !(@isdefined lx_in)
+        lx_in = read(fin, String)
+    end
+    lxs = alllixue(lx_in)
+    d = ntlx(lxs)
+    v = elvec(d)
+    v1 = [dd2dnt(x) for x in v]
+    v2 = dnt2str.(v1)
+    w && writelx2jul(v2, fout)
+    return (;d,v,v1,v2)
+end
+
+
 ;
