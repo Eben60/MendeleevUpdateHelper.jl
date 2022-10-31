@@ -26,6 +26,7 @@ function read_db_tables(dbfile)
 end
 
 const dfs = read_db_tables(elements_dbfile)
+const allnames = vcat([names(x) for x in dfs]...)
 
 sortednames(nt::NamedTuple, to_omit) = sort(setdiff(keys(nt), to_omit))
 sortednames(df::DataFrame) = sort(setdiff(names(df), ["id"]))

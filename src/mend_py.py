@@ -1,3 +1,4 @@
+import mendeleev, inspect
 from mendeleev import element
 from mendeleev.ion import Ion
 # print(element(17).name)
@@ -9,3 +10,4 @@ Si = element('Si')
 # print(Si.electronegativity('li-xue', charge=4))
 
 fe_2 = Ion("Fe", 2)
+print(inspect.getsourcefile(mendeleev))
