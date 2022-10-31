@@ -82,7 +82,10 @@ els = dfs.elements
 els = rightjoin(dfcb, els, on = :atomic_number)
 els = rightjoin(dfpt, els, on = :atomic_number)
 
+select!(els, Not([:en_allen, :en_ghosh, :en_pauling])) # all electronegativies treated separately
 sort!(els, :atomic_number)
+
+
 
 const last_no = maximum(els[!, :atomic_number])
 

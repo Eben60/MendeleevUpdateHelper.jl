@@ -28,8 +28,9 @@ if dev
     include("check_docs.jl")
 end
 include(db_struct_prev_fl)
-include(path_in_Mend("seriesnames.jl", path_m)) # part of Mendeleev
+include(path_in_Mend("data.jl/seriesnames.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("Group_M_def_data.jl", path_m)) # part of Mendeleev
+include(path_in_Mend("property_functions.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("synonym_fields.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("screeniningconsts_def.jl", path_m)) # part of Mendeleev
 include("PeriodicTable2df.jl")
