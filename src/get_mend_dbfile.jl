@@ -1,7 +1,5 @@
 function get_mend_dbfile()
-    pyf = joinpath(@__DIR__ , "get_mend_pkgfile.py")
-    @assert ispath(pyf)
-    pycmd = `python3 $pyf`
+    pycmd = `python3 -c 'import mendeleev, inspect; print(inspect.getsourcefile(mendeleev))'`
     mend_init_file = ""
     open(pycmd, "r", stdout) do io
         mend_init_file = readline(io)
