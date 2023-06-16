@@ -4,9 +4,7 @@ function get_mend_dbfile()
     pycmd = `python3 $pyf`
     mend_init_file = ""
     open(pycmd, "r", stdout) do io
-        while !eof(io)
-            mend_init_file = (readuntil(io, '\n'))
-        end
+        mend_init_file = readline(io)
     end
     
     mend_src, _ = splitdir(mend_init_file)
@@ -14,4 +12,4 @@ function get_mend_dbfile()
     @assert ispath(mend_db)
     return mend_db
 end
-# get_mend_dbfile()
+get_mend_dbfile()
