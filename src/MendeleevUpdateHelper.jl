@@ -27,7 +27,8 @@ global chembook_jsonfile,
     path_docs, 
     screening_fl, 
     static_data_fl, 
-    tmp_dir
+    tmp_dir,
+    last_no
 
 
 dev = true # to actually write data to Mendeleev.jl, set dev = false
@@ -65,6 +66,8 @@ include("make_struct.jl")
 # fn definitions only here 
 
 include("els_data_import.jl")
+(;last_no, el_symbols, data_dict, dfs, els) = els_data_import()
+
 include("more_data_import.jl")
 include("Isotopes.jl")
 
