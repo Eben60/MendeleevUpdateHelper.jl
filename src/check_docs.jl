@@ -1,14 +1,10 @@
-"""
-The Checkdocs module exports the only function `checkdocs()`, which  apparently not used anywhere anymore
+# """
+# The Checkdocs module exports the only function `checkdocs()`, which  apparently not used anywhere anymore
 
-"""
-module Checkdocs
+# """
+# module Checkdocs
 
 function checkdocs()
-    @eval begin
-        using Mendeleev
-    end
-
     ls = readlines(fields_doc_fl)
 
     re = r"(\| `)(\w+)(`\s+\|)"
@@ -39,7 +35,6 @@ function checkdocs()
     return (;not_doc, not_impl)
 end
 
-export checkdocs
 
 """
 julia> not_impl
@@ -55,4 +50,4 @@ julia> not_impl
  :series_id
 
 """
-end # module
+# end # module
