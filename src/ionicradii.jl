@@ -1,19 +1,3 @@
-# module ii
-
-# using DataFrames, Tables, PeriodicTable
-
-# using ..MendeleevUpdateHelper: dfs, ionicradii_fl, last_no, to_str, ionicradii_fl
-
-# include("ionicradii_def.jl")
-
-irs = dfs.ionicradii
-
-if "id" in names(irs)
-    select!(irs, Not([:id]))
-end
-select!(irs, sort(names(irs)))
-sort!(irs, [:atomic_number, :charge, :coordination, :econf])
-
 function el_ionradii(df, el)
     an = elements[el].number
     !(an in df[!, :atomic_number]) && return missing
@@ -89,8 +73,16 @@ function write_irad_data(fl, df)
 end
 
 make_irad_data(fl) = write_irad_data(fl, irs)
-    
-# end # module
 
+function ionicradii()
+    irs = dfs.ionicradii
+
+    if "id" in names(irs)
+        select!(irs, Not([:id]))
+    end
+    select!(irs, sort(names(irs)))
+    sort!(irs, [:atomic_number, :charge, :coordination, :econf])
+    return irs
+end
 
 

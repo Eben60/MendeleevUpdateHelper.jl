@@ -76,7 +76,10 @@ include("Isotopes.jl")
 d_isot = isotopes()
 
 include("make_static_data.jl")
+# fn definitions only here 
+
 include("ionicradii.jl")
+irs = ionicradii()
 
 if ! dev
     make_chem_elements(elements_init_data, els)
