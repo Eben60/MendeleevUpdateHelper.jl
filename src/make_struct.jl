@@ -31,4 +31,6 @@ function make_struct(sname, fnames, ftypes, create=false)
 end
 
 function write_struct_jl(fl, descr)
-  end
+    @error("function write_struct_jl not defined yet" )
+    # empty & unused
+end

@@ -11,7 +11,26 @@ using SQLite, DataFrames, Tables, PeriodicTable # Unitful,
 using JSONTables
 using Scratch
 
-dev = true # set to false to actually write data to Mendeleev.jl
+# function mend_upd(;dev=true, update_db=false)
+
+global chembook_jsonfile, 
+    datadir, 
+    db_struct_new_fl, 
+    db_struct_prev_fl, 
+    elements_dbfile, 
+    elements_src, 
+    fields_doc_fl, 
+    ionicradii_fl, 
+    ionization_fl, 
+    isotopes_fl, 
+    oxstate_fl, 
+    path_docs, 
+    screening_fl, 
+    static_data_fl, 
+    tmp_dir
+
+
+dev = true # to actually write data to Mendeleev.jl, set dev = false
 update_db = false
 dev = dev || update_db # only write to Mendeleev.jl after you controlled the changes of the database
 
@@ -21,20 +40,30 @@ inclpath(fl) = normpath(d, fl)
 # TODO somehow set path before runnung the whole package
 path_m = normpath(d, "../../Mendeleev.jl/src")
 
+include("get_mend_dbfile.jl")
+get_mend_dbfile()
 
 include("paths.jl")
-if dev
-    using Mendeleev
-    include("check_docs.jl")
-end
-include(db_struct_prev_fl)
+paths()
+
+dev && include("check_docs.jl") 
+
+include(db_struct_prev_fl) # no functions, sets a global
+
+
 include(path_in_Mend("data.jl/seriesnames.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("Group_M_def_data.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("property_functions.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("synonym_fields.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("screeniningconsts_def.jl", path_m)) # part of Mendeleev
+
+
 include("PeriodicTable2df.jl")
+dfpt = periodictable2df()
+
 include("make_struct.jl")
+# fn definitions only here 
+
 include("els_data_import.jl")
 include("more_data_import.jl")
 include("Isotopes.jl")
@@ -54,6 +83,8 @@ if ! dev
     # make_oxstates_data(oxstate_fl)
 end
 
+# end # mend_upd
+# export mend_upd
 export checkdocs
 
 # function upd_mend1(m_path=nothing; dev = false)
