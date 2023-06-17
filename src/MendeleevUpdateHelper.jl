@@ -69,6 +69,9 @@ include("els_data_import.jl")
 (;last_no, el_symbols, data_dict, dfs, els) = els_data_import()
 
 include("more_data_import.jl")
+(;ird,  cnames, vs, ion, scr) = more_data_import()
+
+
 include("Isotopes.jl")
 
 include("make_static_data.jl")
