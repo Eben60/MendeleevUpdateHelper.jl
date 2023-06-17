@@ -73,6 +73,7 @@ include("more_data_import.jl")
 
 
 include("Isotopes.jl")
+d_isot = isotopes()
 
 include("make_static_data.jl")
 include("ionicradii.jl")
