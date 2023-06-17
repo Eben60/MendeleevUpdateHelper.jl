@@ -4,7 +4,8 @@
 # """
 # module Checkdocs
 
-function checkdocs()
+function checkdocs(;paths=paths)
+    (;fields_doc_fl) = paths
     ls = readlines(fields_doc_fl)
 
     re = r"(\| `)(\w+)(`\s+\|)"

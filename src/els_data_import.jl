@@ -111,8 +111,8 @@ sortednames(nt::NamedTuple, to_omit) = sort(setdiff(keys(nt), to_omit))
 sortednames(df::DataFrame) = sort(setdiff(names(df), ["id"]))
 
 
-
-function els_data_import()
+function els_data_import(;paths=paths)
+    (;elements_src, elements_dbfile, chembook_jsonfile, db_struct_new_fl) = paths
     if !isfile(elements_dbfile)
         cp(elements_src, elements_dbfile)
     else
@@ -147,10 +147,6 @@ function els_data_import()
         end
         throw(ErrorException("database layout changed! - please re-check"))
     end
-
-    # # # # # # # # # # 
-
-
 
     dfcb = readdf(chembook_jsonfile)
 

@@ -12,34 +12,20 @@ using JSONTables
 using Scratch
 
 
-global chembook_jsonfile, 
-    cnames, 
+global cnames, 
     d_isot, 
     data_dict, 
-    datadir, 
-    db_struct_new_fl, 
-    db_struct_prev_fl, 
     dfpt, 
     dfs,
     el_symbols, 
-    elements_dbfile, 
-    elements_src, 
     els,
-    fields_doc_fl, 
     ion, 
-    ionicradii_fl, 
-    ionization_fl, 
     ird,  
     irs,
-    isotopes_fl, 
     last_no,
-    oxstate_fl, 
-    path_docs, 
     scr, 
-    screening_fl, 
-    static_data_fl, 
-    tmp_dir,
     vs
+
 
 # dev = false # to actually write data to Mendeleev.jl, set dev = false
 # update_db = false
@@ -54,12 +40,12 @@ path_m = normpath(d, "../../Mendeleev.jl/src")
 include("get_mend_dbfile.jl")
 get_mend_dbfile()
 
-include("paths.jl")
-paths()
+include("getpaths.jl")
+paths = getpaths()
 
 include("check_docs.jl")
 
-include(db_struct_prev_fl) # no functions, sets a global
+include(paths.db_struct_prev_fl) # no functions, sets a global
 
 include(path_in_Mend("data.jl/seriesnames.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("Group_M_def_data.jl", path_m)) # part of Mendeleev
@@ -76,7 +62,11 @@ include("make_static_data.jl")
 include("ionicradii.jl")
 
 
-function mend_upd(;dev=true, update_db=false)
+function mend_upd(;dev=true, update_db=false, paths=paths)
+    (;static_data_fl, screening_fl, ionization_fl, ionicradii_fl) = paths
+    # (;oxstate_fl) = paths # oxidation states are my own work now, no import from Mendeleev db
+    # (;isotopes_fl) = paths # unused temporary, or at least until py-mendeleev checked and found OK
+
     # to actually write data to Mendeleev.jl, set dev = false
     dev = dev || update_db # only write to Mendeleev.jl after you controlled the changes of the database
     if dev
