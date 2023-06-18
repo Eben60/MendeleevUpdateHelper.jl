@@ -44,8 +44,7 @@ include("make_data_through_python.jl")
 
 function mend_upd(;dev=true, update_db=false, paths=paths)
     (;static_data_fl, screening_fl, ionization_fl, ionicradii_fl) = paths
-    # (;oxstate_fl) = paths # oxidation states are my own work now, no import from Mendeleev db
-    # (;isotopes_fl) = paths # unused temporary, or at least until py-mendeleev checked and found OK
+
 
     # to actually write data to Mendeleev.jl, set dev = false
     dev = dev || update_db # only write to Mendeleev.jl after you controlled the changes of the database
@@ -62,7 +61,7 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
     els_data = els_data_import(dfpt, update_db)
 
     (;vs, scr, ion) = more_data_import(els_data)
-    d_isot = isotopes(els_data)
+
     irs = ionicradii(els_data)
 
     els_data = merge(els_data, (;ion, scr, irs))
@@ -70,7 +69,7 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
     if ! dev
         # make_chem_elements(elements_init_data, els) # TODO what was meant?
         make_elements_data(static_data_fl, els_data)
-        # make_isotopes_data(isotopes_fl, d_isot, els_data) # temporary, or at least until py-mendeleev checked and found OK
+
         # make_static_data(static_data_fl, vs, f_unames)
         make_screening_data(screening_fl, els_data)
         make_ionization_data(ionization_fl, els_data)
@@ -79,9 +78,12 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
         make_ephil_data() # via calling Python
         make_lixue_data() # via calling Python
 
-
+        # d_isot = isotopes(els_data)
+        # (;isotopes_fl) = paths 
+        # make_isotopes_data(isotopes_fl, d_isot, els_data) # temporary, or at least until py-mendeleev checked and found OK
 
         # oxidation states are my own work now, no import from Mendeleev db
+        # (;oxstate_fl) = paths
         # make_oxstates_data(oxstate_fl)
     end
     return nothing
