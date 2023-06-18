@@ -18,7 +18,6 @@ inclpath(fl) = normpath(d, fl)
 path_m = normpath(d, "../../Mendeleev.jl/src")
 
 include("get_mend_dbfile.jl")
-get_mend_dbfile()
 
 include("getpaths.jl")
 paths = getpaths()
@@ -50,10 +49,6 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
     dev = dev || update_db # only write to Mendeleev.jl after you controlled the changes of the database
     if dev
         @eval using Mendeleev
-    end
-
-    if update_db
-        global elements_src = get_mend_dbfile() # TODO - that's actually wrong! 
     end
 
     dfpt = periodictable2df()

@@ -14,7 +14,7 @@ function read_db_tables(dbfile)
     return dfs
 end
 
-function write_dflayout(fl)
+function write_dflayout(fl, tabledict)
     open(fl, "w") do io
         println(io, "# this is computer generated file - better not edit")
         println(io)
@@ -114,23 +114,19 @@ sortednames(df::DataFrame) = sort(setdiff(names(df), ["id"]))
 
 
 function els_data_import(dfpt, update_db ;paths=paths)
-    (;elements_src, elements_dbfile, chembook_jsonfile, db_struct_new_fl) = paths
-    if !isfile(elements_dbfile)
-        cp(elements_src, elements_dbfile)
-    else
-        src_info = stat(elements_src)
-        cd_info = stat(elements_dbfile)
-        if (src_info.size != cd_info.size)
-            cp(elements_src, elements_dbfile; force=true)
-            println("updated database cached file")
-        end
+    (;elements_dbfile, chembook_jsonfile, db_struct_new_fl) = paths
+    if (!isfile(elements_dbfile) | update_db)
+        elements_src = get_mend_dbfile()
+        cp(elements_src, elements_dbfile; force=true)
+        println("updated database cached file")
     end
-
+    println("we are here!")
     dfs = read_db_tables(elements_dbfile)
     allnames = vcat([names(x) for x in dfs]...)
 
     tablenames = sortednames(dfs, [:alembic_version,])
     tabledict = Dict{Symbol, Vector{String}}()
+
 
     for tn in tablenames 
         df = dfs[tn]
@@ -141,11 +137,10 @@ function els_data_import(dfpt, update_db ;paths=paths)
     end
 
     include(paths.db_struct_prev_fl) # previous df_layout 
-    try
-        @assert df_layout == tabledict
-    catch
+    
+    if !(df_layout == tabledict)
         if update_db
-            write_dflayout(db_struct_new_fl)
+            write_dflayout(db_struct_new_fl, tabledict)
             println("wrote the current db layout into file \"db_struct_new.jl\"")
         end
         throw(ErrorException("database layout changed! - please re-check"))
