@@ -1,3 +1,5 @@
+module LiXue
+
 const None = missing
 
 function alllixue(lx)
@@ -108,7 +110,7 @@ function writelx2jul(v, fl)
     return nothing
 end
 
-function lixuepy2jul(fin="lixue_all.txt", fout="lixue_all.jl"; w=false)
+function lixuepy2jul(fin="lixue_data.txt", fout="lixue_data.jl"; w=true)
     fin = normpath(@__DIR__, "../data/", fin)
     fout = normpath(@__DIR__, "../data/", fout)
     if !(@isdefined lx_in)
@@ -121,7 +123,7 @@ function lixuepy2jul(fin="lixue_all.txt", fout="lixue_all.jl"; w=false)
     v2 = dnt2str.(v1)
     w && writelx2jul(v2, fout)
     return (;d,v,v1,v2)
-end
+end 
 
-
+end # module
 ;

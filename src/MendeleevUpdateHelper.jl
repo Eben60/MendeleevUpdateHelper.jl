@@ -38,6 +38,8 @@ include("more_data_import.jl")
 include("Isotopes.jl")
 include("make_static_data.jl")
 include("ionicradii.jl")
+include("read_en_lixue.jl")
+include("make_data_through_python.jl")
 
 
 function mend_upd(;dev=true, update_db=false, paths=paths)
@@ -73,9 +75,16 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
         make_screening_data(screening_fl, els_data)
         make_ionization_data(ionization_fl, els_data)
         make_irad_data(ionicradii_fl, els_data)
+
+        make_ephil_data() # via calling Python
+        make_lixue_data() # via calling Python
+
+
+
         # oxidation states are my own work now, no import from Mendeleev db
         # make_oxstates_data(oxstate_fl)
     end
+    return nothing
 end # mend_upd
 # export mend_upd
 

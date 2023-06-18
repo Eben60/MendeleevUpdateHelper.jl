@@ -31,6 +31,15 @@ function getpaths()
     screening_fl = path_in_Mend("data.jl/screening_data.jl", path_m)
     ionization_fl = path_in_Mend("data.jl/ionization_data.jl", path_m)
     isotopes_fl = path_in_Mend("data.jl/isotopes_data.jl", path_m)
+
+    ephyl_data = "ephyl_data.jl"
+    ephil_data_Mend = path_in_Mend(joinpath("data.jl", ephyl_data), path_m)
+    ephil_data_loc = normpath(datadir, ephyl_data)
+
+    lixue_data = "lixue_data.jl"
+    lixue_data_Mend = path_in_Mend(joinpath("data.jl", lixue_data), path_m)
+    lixue_data_loc = normpath(datadir, lixue_data)
+
     fields_doc_fl = path_in_Mend("elements_data_fields.md", path_docs)
 
     ionicradii_fl = path_in_Mend("data.jl/ionrad_data.jl", path_m) 
@@ -41,5 +50,6 @@ function getpaths()
     @assert ispath(fields_doc_fl)
     return (;elements_src, elements_dbfile, chembook_jsonfile, 
         static_data_fl, oxstate_fl, screening_fl, ionization_fl, isotopes_fl, 
-        fields_doc_fl, ionicradii_fl, db_struct_prev_fl, db_struct_new_fl)
+        fields_doc_fl, ionicradii_fl, db_struct_prev_fl, db_struct_new_fl,
+        ephil_data_loc, ephil_data_Mend,  lixue_data_loc, lixue_data_Mend)
 end
