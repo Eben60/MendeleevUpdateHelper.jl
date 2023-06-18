@@ -12,14 +12,7 @@ using JSONTables
 using Scratch
 
 
-global cnames, 
-    d_isot, 
-    dfpt, 
-    ion, 
-    ird,  
-    irs,
-    scr, 
-    vs
+global dfpt
 
 
 # dev = false # to actually write data to Mendeleev.jl, set dev = false
@@ -76,17 +69,18 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
 
     els_data = els_data_import()
 
-    global ird,  cnames, vs, ion, scr, d_isot, irs
-    (;ird,  cnames, vs, ion, scr) = more_data_import(els_data)
+    (;vs, scr, ion) = more_data_import(els_data)
     d_isot = isotopes(els_data)
     irs = ionicradii(els_data)
+
+    els_data = merge(els_data, (;ion, scr, irs))
 
     if ! dev
         # make_chem_elements(elements_init_data, els) # TODO what was meant?
         make_elements_data(static_data_fl, els_data)
-        # make_isotopes_data(isotopes_fl, els_data) # temporary, or at least until py-mendeleev checked and found OK
+        # make_isotopes_data(isotopes_fl, d_isot, els_data) # temporary, or at least until py-mendeleev checked and found OK
         # make_static_data(static_data_fl, vs, f_unames)
-        make_screening_data(screening_fl)
+        make_screening_data(screening_fl, els_data)
         make_ionization_data(ionization_fl, els_data)
         make_irad_data(ionicradii_fl, els_data)
         # oxidation states are my own work now, no import from Mendeleev db

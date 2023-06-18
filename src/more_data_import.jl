@@ -20,11 +20,11 @@ round_pos(x, pos::Int=13) = x
 
 round_pos(x::Array, pos::Int=13) = round_pos.(x, pos)
 
-getscreening(no) = scr[scr.atomic_number.==no, [:atomic_number, :shell, :orb_type, :screening]] |> Tables.rowtable .|> Tuple
+getscreening(no, scr) = scr[scr.atomic_number.==no, [:atomic_number, :shell, :orb_type, :screening]] |> Tables.rowtable .|> Tuple
 
-function getscreenings()
+function getscreenings(scr)
     nos = sort(unique(scr.atomic_number))
-    return [getscreening(no) for no in nos]
+    return [getscreening(no, scr) for no in nos]
 end
 
 function unmiss(x, T::Type)
@@ -46,7 +46,7 @@ function unmiss!(df::AbstractDataFrame)
     end
 end
 
-function ionizenergies(atomic_number)
+function ionizenergies(atomic_number, ion)
     iz = ion[ion.atomic_number.== atomic_number, [:degree, :energy]]
     isempty(iz) && return missing
     nts = iz  |> Tables.rowtable
@@ -87,7 +87,7 @@ function more_data_import(els_data)
     transform!(scr, :screening => (x->round_pos.(x)); renamecols=false)
 
 
-    ird = dfs.ionicradii
+    # ird = dfs.ionicradii # apparently unused - see irs
     # transform!(ird, :screening => (x->round_pos.(x, 13)); renamecols=false)
 
     # df2unitful!(els, f_units)
@@ -95,11 +95,11 @@ function more_data_import(els_data)
 
     # ctypes = coltypes(eachcol(els), fu1) # de-unitfulling
 
-    cnames = names(els) # 70-element Vector{String}: "annotation"...
+    # cnames = names(els) # 70-element Vector{String}: "annotation"... # apparently unused
     vs = NamedTuple.(eachrow(els))
 
     ion = dfs.ionizationenergies
-    return (;ird,  cnames, vs, ion, scr)
+    return (; vs, ion, scr)
 end
 
 

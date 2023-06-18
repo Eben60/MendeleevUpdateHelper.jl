@@ -18,7 +18,7 @@ function isots_string(x)
 end
 
 
-function make_isotopes_data(fl, els_data)
+function make_isotopes_data(fl, d_isot, els_data)
     open(fl, "w") do io
         println(io, "# this is computer generated file - better not edit")
         println(io)

@@ -62,9 +62,10 @@ function print_atom_screenings(io, d)
     println(io, "]),")
 end
 
-function make_screening_data(fl)
+function make_screening_data(fl, els_data)
+    (;scr) = els_data
     open(fl, "w") do io
-        screenings = getscreenings()
+        screenings = getscreenings(scr)
         println(io, "# this is computer generated file - better not edit")
         println(io)
         println(io, "const screenings_data = Dict(")
@@ -76,8 +77,8 @@ function make_screening_data(fl)
     return nothing
 end
 
-function print_ioniz_energies(io, atomic_number)
-    ie = ionizenergies(atomic_number)
+function print_ioniz_energies(io, atomic_number, ion)
+    ie = ionizenergies(atomic_number, ion)
     if ismissing(ie)
         println(io, "    $atomic_number => missing,")
     else
@@ -88,12 +89,13 @@ function print_ioniz_energies(io, atomic_number)
 end
 
 function make_ionization_data(fl, els_data)
+    (;ion ) = els_data
     open(fl, "w") do io
         println(io, "# this is computer generated file - better not edit")
         println(io)
         println(io, "const ionization_data = Dict{Int64, Union{Missing, Vector{Union{Missing, Float64}}}}(")
         for atomic_number in 1:els_data.last_no
-            print_ioniz_energies(io, atomic_number)
+            print_ioniz_energies(io, atomic_number, ion)
         end
         println(io, ")")
     end

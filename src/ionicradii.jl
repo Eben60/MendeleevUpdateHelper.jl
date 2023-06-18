@@ -64,7 +64,9 @@ function writecolumns(io, df)
     println(io, ")")
 end
 
-function write_irad_data(fl, df, els_data)
+function make_irad_data(fl, els_data)
+    (;irs ) = els_data
+    df = irs
     open(fl, "w") do io
         writeranges(io, df, els_data)
         writecolumns(io, df)
@@ -72,7 +74,7 @@ function write_irad_data(fl, df, els_data)
     end
 end
 
-make_irad_data(fl, els_data) = write_irad_data(fl, irs, els_data)
+# make_irad_data(fl, els_data) = write_irad_data(fl, irs, els_data)
 
 function ionicradii(els_data)
     (;dfs) = els_data
