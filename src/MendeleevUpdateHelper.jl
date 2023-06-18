@@ -14,15 +14,10 @@ using Scratch
 
 global cnames, 
     d_isot, 
-    data_dict, 
     dfpt, 
-    dfs,
-    el_symbols, 
-    els,
     ion, 
     ird,  
     irs,
-    last_no,
     scr, 
     vs
 
@@ -78,22 +73,22 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
     end
 
     global dfpt = periodictable2df()
-    global last_no, el_symbols, data_dict, dfs, els
-    (;last_no, el_symbols, data_dict, dfs, els) = els_data_import()
+
+    els_data = els_data_import()
 
     global ird,  cnames, vs, ion, scr, d_isot, irs
-    (;ird,  cnames, vs, ion, scr) = more_data_import()
-    d_isot = isotopes()
-    irs = ionicradii()
+    (;ird,  cnames, vs, ion, scr) = more_data_import(els_data)
+    d_isot = isotopes(els_data)
+    irs = ionicradii(els_data)
 
     if ! dev
         # make_chem_elements(elements_init_data, els) # TODO what was meant?
-        make_elements_data(static_data_fl, data_dict)
-        # make_isotopes_data(isotopes_fl) # temporary, or at least until py-mendeleev checked and found OK
+        make_elements_data(static_data_fl, els_data)
+        # make_isotopes_data(isotopes_fl, els_data) # temporary, or at least until py-mendeleev checked and found OK
         # make_static_data(static_data_fl, vs, f_unames)
         make_screening_data(screening_fl)
-        make_ionization_data(ionization_fl)
-        make_irad_data(ionicradii_fl)
+        make_ionization_data(ionization_fl, els_data)
+        make_irad_data(ionicradii_fl, els_data)
         # oxidation states are my own work now, no import from Mendeleev db
         # make_oxstates_data(oxstate_fl)
     end

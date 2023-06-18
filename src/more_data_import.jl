@@ -1,12 +1,13 @@
-function getoxstates(no)
+function getoxstates(no, els_data)
+    (;dfs) = els_data
     ox = dfs.oxidationstates
     oxstates = ox[ox.atomic_number.==no , :oxidation_state]
     (isempty(oxstates) || ismissing(oxstates[1])) && return missing # Int[]
     return sort([Int(x) for x in oxstates])
 end
 
-function alloxstates()
-    return Dict([no=>getoxstates(no) for no in els.atomic_number])
+function alloxstates(els_data)
+    return Dict([no=>getoxstates(no, els_data) for no in els_data.els.atomic_number])
 end
 
 
@@ -61,7 +62,8 @@ function ionizenergies(atomic_number)
     return v
 end
 
-function more_data_import()
+function more_data_import(els_data)
+    (;dfs, els) = els_data
     ser = dfs.series
     # sort(ser, :name)
     # check if series names still the same es ever

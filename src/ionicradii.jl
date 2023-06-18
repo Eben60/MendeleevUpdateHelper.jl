@@ -12,7 +12,7 @@ function irad_range(df, el)
     return (start=rng.start, stop=rng.stop)
 end
 
-irad_ranges(df) = [irad_range(df, el) for el in 1:last_no]
+irad_ranges(df, els_data) = [irad_range(df, el) for el in 1:els_data.last_no]
 
 function writerange(io, range, el="")
     if ismissing(range)
@@ -23,8 +23,8 @@ function writerange(io, range, el="")
     return nothing
 end
 
-function writeranges(io, df)
-    ranges = irad_ranges(df)
+function writeranges(io, df, els_data)
+    ranges = irad_ranges(df, els_data)
     println(io, "const ionrad_ranges = (")
     for (n, r) in pairs(ranges)
         writerange(io, r, elements[n].symbol)
@@ -64,17 +64,18 @@ function writecolumns(io, df)
     println(io, ")")
 end
 
-function write_irad_data(fl, df)
+function write_irad_data(fl, df, els_data)
     open(fl, "w") do io
-        writeranges(io, df)
+        writeranges(io, df, els_data)
         writecolumns(io, df)
         println(io, ";")
     end
 end
 
-make_irad_data(fl) = write_irad_data(fl, irs)
+make_irad_data(fl, els_data) = write_irad_data(fl, irs, els_data)
 
-function ionicradii()
+function ionicradii(els_data)
+    (;dfs) = els_data
     irs = dfs.ionicradii
 
     if "id" in names(irs)

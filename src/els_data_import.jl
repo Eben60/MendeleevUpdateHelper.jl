@@ -66,7 +66,7 @@ end
 #     println(io, "    )")
 # end
 
-function printvector(io, v)
+function printvector(io, v, el_symbols)
     println(io, "    [")
     for (n, x) in pairs(v)
          println(io, "    $(to_str(x)) , # $(el_symbols[n])")
@@ -74,7 +74,9 @@ function printvector(io, v)
     println(io, "    ]")
 end
 
-function make_elements_data(fl, data)
+function make_elements_data(fl, els_data)
+    (;el_symbols, data_dict) = els_data
+    data = data_dict
     nms = sort(collect(keys(data)))
     open(fl, "w") do io
         println(io, "# this is computer generated file - better not edit")
@@ -82,7 +84,7 @@ function make_elements_data(fl, data)
         println(io, "const elements_data = (; ")
         for nm in nms
             println(io, "    $nm = ")
-            printvector(io, data[nm])
+            printvector(io, data[nm], el_symbols)
             println(io, "    ,")
         end
         println(io, ")")

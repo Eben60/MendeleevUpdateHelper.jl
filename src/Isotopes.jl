@@ -18,12 +18,12 @@ function isots_string(x)
 end
 
 
-function make_isotopes_data(fl)
+function make_isotopes_data(fl, els_data)
     open(fl, "w") do io
         println(io, "# this is computer generated file - better not edit")
         println(io)
         println(io, "const isotopes_data = Dict{Int64, Union{Missing, Isotopes}}(")
-        for no in 1:last_no
+        for no in 1:els_data.last_no
             println(io, "    $no => ", isots_string(d_isot[no]), ",")
         end
         println(io, ")")
@@ -35,10 +35,11 @@ el(x) = elements[x] # to enable broadcasting over x
 sym(x) = string(el(x).symbol)
 
 
-function isotopes()
+function isotopes(els_data)
+    (;dfs) = els_data
     isot = dfs.isotopes
     i4 = select(isot, :id, :atomic_number, :atomic_number => (x -> sym.(x))  => :sym, :mass_number, :mass, :abundance; renamecols=false)
     i4s = subset(i4, :abundance => (x -> .!(ismissing.(x) .| iszero.(x))))[!, [:atomic_number, :mass_number, :mass, :abundance]]
-    d_isot = Dict(n => elem_isotopes(n, i4s) for n in 1:last_no)
+    d_isot = Dict(n => elem_isotopes(n, i4s) for n in 1:els_data.last_no)
     return d_isot
 end

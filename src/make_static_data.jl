@@ -37,9 +37,9 @@
 # end
 
 
-function make_oxstates_data(fl)
+function make_oxstates_data(fl, els_data)
     open(fl, "w") do io
-        oxstates = alloxstates()
+        oxstates = alloxstates(els_data)
         println(io, "# this is computer generated file - better not edit")
         println(io)
         println(io, "const oxistates_data = Dict(")
@@ -87,12 +87,12 @@ function print_ioniz_energies(io, atomic_number)
     return nothing
 end
 
-function make_ionization_data(fl)
+function make_ionization_data(fl, els_data)
     open(fl, "w") do io
         println(io, "# this is computer generated file - better not edit")
         println(io)
         println(io, "const ionization_data = Dict{Int64, Union{Missing, Vector{Union{Missing, Float64}}}}(")
-        for atomic_number in 1:last_no
+        for atomic_number in 1:els_data.last_no
             print_ioniz_energies(io, atomic_number)
         end
         println(io, ")")
