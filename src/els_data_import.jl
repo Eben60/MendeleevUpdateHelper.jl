@@ -113,7 +113,7 @@ sortednames(nt::NamedTuple, to_omit) = sort(setdiff(keys(nt), to_omit))
 sortednames(df::DataFrame) = sort(setdiff(names(df), ["id"]))
 
 
-function els_data_import(;paths=paths)
+function els_data_import(dfpt, update_db ;paths=paths)
     (;elements_src, elements_dbfile, chembook_jsonfile, db_struct_new_fl) = paths
     if !isfile(elements_dbfile)
         cp(elements_src, elements_dbfile)
@@ -140,6 +140,7 @@ function els_data_import(;paths=paths)
         push!(tabledict, tn=>dfnames)
     end
 
+    include(paths.db_struct_prev_fl) # previous df_layout 
     try
         @assert df_layout == tabledict
     catch

@@ -11,14 +11,6 @@ using SQLite, DataFrames, Tables, PeriodicTable # Unitful,
 using JSONTables
 using Scratch
 
-
-global dfpt
-
-
-# dev = false # to actually write data to Mendeleev.jl, set dev = false
-# update_db = false
-# dev = dev || update_db # only write to Mendeleev.jl after you controlled the changes of the database
-
 d = @__DIR__
 inclpath(fl) = normpath(d, fl)
 
@@ -32,8 +24,6 @@ include("getpaths.jl")
 paths = getpaths()
 
 include("check_docs.jl")
-
-include(paths.db_struct_prev_fl) # no functions, sets a global
 
 include(path_in_Mend("data.jl/seriesnames.jl", path_m)) # part of Mendeleev
 include(path_in_Mend("Group_M_def_data.jl", path_m)) # part of Mendeleev
@@ -62,12 +52,12 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
     end
 
     if update_db
-        global elements_src = get_mend_dbfile()
+        global elements_src = get_mend_dbfile() # TODO - that's actually wrong! 
     end
 
-    global dfpt = periodictable2df()
+    dfpt = periodictable2df()
 
-    els_data = els_data_import()
+    els_data = els_data_import(dfpt, update_db)
 
     (;vs, scr, ion) = more_data_import(els_data)
     d_isot = isotopes(els_data)
