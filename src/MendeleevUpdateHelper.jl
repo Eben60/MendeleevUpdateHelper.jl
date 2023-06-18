@@ -1,9 +1,9 @@
 """
 The MendeleevUpdateHelper module updates files in the (separate) Mendeleev.jl package.
-For this purpose, some function must be called in a sequence. Thus, usage is as following
+Usage is as following
 # Examples
 ```julia-repl
-julia> using UpdateMendeleev; # upd_mend1(); upd_mend2(); upd_mend3()
+julia> MendeleevUpdateHelper; MendeleevUpdateHelper.mend_upd(); # etc.
 ```
 """
 module MendeleevUpdateHelper

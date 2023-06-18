@@ -32,9 +32,9 @@ function getpaths()
     ionization_fl = path_in_Mend("data.jl/ionization_data.jl", path_m)
     isotopes_fl = path_in_Mend("data.jl/isotopes_data.jl", path_m)
 
-    ephyl_data = "ephyl_data.jl"
-    ephil_data_Mend = path_in_Mend(joinpath("data.jl", ephyl_data), path_m)
-    ephil_data_loc = normpath(datadir, ephyl_data)
+    ephil_data = "ephil_data.jl"
+    ephil_data_Mend = path_in_Mend(joinpath("data.jl", ephil_data), path_m)
+    ephil_data_loc = normpath(datadir, ephil_data)
 
     lixue_data = "lixue_data.jl"
     lixue_data_Mend = path_in_Mend(joinpath("data.jl", lixue_data), path_m)

@@ -12,7 +12,7 @@ def ephyall(first=1, last=119):
 ephys = ephyall()
 
 p = os.path.dirname(__file__)
-outf = os.path.normpath(os.path.join(p, "../data/ephyl_data.jl"))
+outf = os.path.normpath(os.path.join(p, "../data/ephil_data.jl"))
 
 with open(outf, "w") as txtfile:
     txtfile.write("# this is computer generated file - better not edit \n\n")
