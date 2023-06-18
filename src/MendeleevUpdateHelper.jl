@@ -67,7 +67,7 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
     els_data = merge(els_data, (;ion, scr, irs))
 
     if ! dev
-        # make_chem_elements(elements_init_data, els) # TODO what was meant?
+        # make_chem_elements(elements_init_data, els)
         make_elements_data(static_data_fl, els_data)
 
         # make_static_data(static_data_fl, vs, f_unames)
