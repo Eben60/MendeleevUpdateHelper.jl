@@ -1,4 +1,4 @@
-name = "MendeleevUpdateHelper"
+name = "MendUp"
 uuid = "b3a183fb-bc0b-4828-a5af-bcf5f1822175"
 authors = ["Eben60"]
 version = "0.0.3"
@@ -23,7 +23,7 @@ SQLite = "1.4"
 Scratch = "1.1"
 Tables = "1.9"
 Unitful = "1.12"
-julia = "1.6"
+julia = "1.9"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

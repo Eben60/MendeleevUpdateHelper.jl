@@ -1,12 +1,12 @@
 """
-The MendeleevUpdateHelper module updates files in the (separate) Mendeleev.jl package.
+The MendUp module updates files in the (separate) Mendeleev.jl package.
 Usage is as following
 # Examples
 ```julia-repl
-julia> MendeleevUpdateHelper; MendeleevUpdateHelper.mend_upd(); # etc.
+julia> MendUp; MendeleevUpdateHelper.mend_upd(;dev=false)
 ```
 """
-module MendeleevUpdateHelper
+module MendUp
 using SQLite, DataFrames, Tables, PeriodicTable # Unitful, 
 using JSONTables
 using Scratch
