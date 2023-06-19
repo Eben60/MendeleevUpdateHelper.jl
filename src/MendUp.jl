@@ -41,10 +41,12 @@ include("read_en_lixue.jl")
 include("make_data_through_python.jl")
 
 """
-    mend_upd(;dev=true, update_db=false, paths=paths)
-update_db can be `Bool` or the Symbol `:restore`
+    mend_upd(;dev=true, update_db=false, paths=paths, ret = false)
+`update_db` can be `Bool` or the Symbol `:restore`
+
+`ret` defines whether the function returns (a lot of) data, or nothing
 """
-function mend_upd(;dev=true, update_db=false, paths=paths)
+function mend_upd(;dev=true, update_db=false, paths=paths, ret = false)
     (;static_data_fl, screening_fl, ionization_fl, ionicradii_fl) = paths
 
 
@@ -84,7 +86,8 @@ function mend_upd(;dev=true, update_db=false, paths=paths)
         # (;oxstate_fl) = paths
         # make_oxstates_data(oxstate_fl)
     end
-    return nothing
+    !ret && return nothing
+    return (; els_data, paths)
 end # mend_upd
 # export mend_upd
 
