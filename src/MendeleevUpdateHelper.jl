@@ -40,7 +40,10 @@ include("ionicradii.jl")
 include("read_en_lixue.jl")
 include("make_data_through_python.jl")
 
-
+"""
+    mend_upd(;dev=true, update_db=false, paths=paths)
+update_db can be `Bool` or the Symbol `:restore`
+"""
 function mend_upd(;dev=true, update_db=false, paths=paths)
     (;static_data_fl, screening_fl, ionization_fl, ionicradii_fl) = paths
 
